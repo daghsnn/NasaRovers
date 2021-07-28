@@ -8,123 +8,200 @@
 import UIKit
 import Kingfisher
 
-class CuriosityVC: UICollectionViewController {
-    
-    var service = NasaServis()
+class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    static private var btnAccess = false
 
-    lazy var viewModel : RoversViewModel = {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-        return RoversViewModel()
-    }()
+    var service = NasaServis()
+    var curiosityModel : [Photo] = [Photo]()
+//    @IBOutlet weak var allBtn: UIBarButtonItem!
+//    @IBOutlet weak var fhazBtn: UIBarButtonItem!
+//
+//    @IBOutlet weak var rhazBtn: UIBarButtonItem!
+//    @IBOutlet weak var mastBtn: UIBarButtonItem!
+//
+//    @IBOutlet weak var chemCamBtn: UIBarButtonItem!
+//
+//    @IBOutlet weak var mahliBtn: UIBarButtonItem!
+//    @IBOutlet weak var navcamBtn: UIBarButtonItem!
+//
+//    @IBOutlet weak var pancamBtn: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchCuriosity(paginate: false)
-        print(viewModel)
+        
+        tabBarController?.title = "Select a Rover Camera"
+
+        service.getCuriosity(pagination: false) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
       
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        navigationConfig()
+        
+        service.getCuriosity(pagination: false) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
-    */
     
     // MARK: UICollectionViewDataSource
 
 
-
+  
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return viewModel.numberOfCells
+        return curiosityModel.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RoverCell
-        
-        let url = URL(string: viewModel.roverCellViewModel[indexPath.row].imageURL)
-        cell.curiosityImg.kf.setImage(with: url)
+        let indexCell = curiosityModel[indexPath.row]
+        let url = URL(string: indexCell.imgSrc!)
+        let urlCached = ImageResource(downloadURL: url!, cacheKey: indexCell.imgSrc!)
+        cell.curiosityImg.kf.setImage(with: urlCached)
         return cell
     }
-    func configureCollection(){
-        if let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "curiostyToDetail", sender: curiosityModel[indexPath.row])
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "curiostyToDetail" {
+            let vc = segue.destination as! DetailVC
+            vc.model = sender as! Photo
+        }
+    }
 
-            let rowNumber : CGFloat = 3
-            let spacing : CGFloat = 4
+    // MARK: Layout Flow delegate
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        
+        
+        let noOfCellsInRow = 3
 
+           let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
 
-            let totalSpace = spacing * (rowNumber - 1)
-            let itemSpace = totalSpace / rowNumber
-            let cellWidth = collectionView.frame.width / rowNumber - itemSpace
-            let cellHeight = cellWidth
-            layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+           let totalSpace = flowLayout.sectionInset.left
+               + flowLayout.sectionInset.right
+               + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
 
-            layout.minimumInteritemSpacing = spacing
+           let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
 
-            layout.minimumLineSpacing = spacing
+           return CGSize(width: size, height: size)
+    }
+  
+    // MARK: Scroll
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
+            
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+                self.service.getCuriosity(pagination: true) { (data) in
+                    self.curiosityModel.append(contentsOf: data)
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                            
+                        }
+                    }
+            }
+                    
 
         }
 
     }
     
-//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let position = scrollView.contentOffset.y
-//        if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                self.service.getCuriosity(pagination: true) { (data) in
-//                    self.viewModel.fillModel(photos: data)
-//                    DispatchQueue.main.async {
-//                        self.collectionView.reloadData()
-//                    }
-//                }
+    // MARK: Navigation Functions
+
+    @IBAction func allBtn(_ sender: Any) {
+        service.getCuriosity(pagination: false) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+//            CuriosityVC.btnAccess = true
+//            if CuriosityVC.btnAccess == true{
+//                self.allBtn.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 //            }
+//            else{
+//                self.allBtn.tintColor = #colorLiteral(red: 0, green: 0.8678845553, blue: 1, alpha: 1)
 //
 //
-//        }
-//
-//    }
+//            }
+        }
+    }
+    @IBAction func fhazBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.fhaz.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            
+            
+            }
+        }
+    }
+    @IBAction func rhazBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.rhaz.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+
+    }
+    @IBAction func mastBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.mast.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
+    @IBAction func chemcamBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.chemcam.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
+    @IBAction func mahliBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.mahli.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
+    @IBAction func navcamBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.navcam.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
+    @IBAction func pancamBtn(_ sender: Any) {
+        service.getCuriostyCam(camera: camera.pancam.rawValue, pagination: true) { (data) in
+            self.curiosityModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
     
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
 // MARK:Extension
 
-extension CuriosityVC : UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width / 3, height: view.frame.width/5)
-    }
-}
+

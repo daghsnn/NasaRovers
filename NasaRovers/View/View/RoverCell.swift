@@ -10,10 +10,11 @@ import Kingfisher
 class RoverCell: UICollectionViewCell {
     
     @IBOutlet weak var curiosityImg: UIImageView!
-    @IBOutlet weak var opportinityLabel: UILabel!
-
-    func configImage(imgURL : URL) {
-        curiosityImg.kf.setImage(with: imgURL)
-    }
+  
+    @IBOutlet weak var opportunityImg: UIImageView!
+    
+    @IBOutlet weak var spiritImg: UIImageView!
+   
+    
     
 }

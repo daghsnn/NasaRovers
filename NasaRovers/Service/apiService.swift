@@ -11,9 +11,13 @@ import Alamofire
 
 protocol NasaProtocols {
     func getCuriosity(pagination: Bool, complete: @escaping ([Photo])->() )
-    func getOpportunity(pagination: Bool, complete: @escaping ([Photo])->() )
-    func getSpirit(pagination: Bool, complete: @escaping ([Photo])->() )
+    func getCuriostyCam(camera:camera.RawValue,pagination: Bool, complete: @escaping ([Photo])->() )
 
+    func getOpportunity(pagination: Bool, complete: @escaping ([Photo])->() )
+    func getOpportunityCam(camera:camera.RawValue,pagination: Bool, complete: @escaping ([Photo])->() )
+
+    func getSpirit(pagination: Bool, complete: @escaping ([Photo])->() )
+    func getSpiritCam(camera:camera.RawValue,pagination: Bool, complete: @escaping ([Photo])->() )
     
 }
 enum api : String {
@@ -28,20 +32,26 @@ enum rover: String {
 
 }
 enum camera: String {
-    case fhaz = "camera=fhaz"
-    case rhaz = "camera=rhaz"
-    case mast = "camera=mast"
-    case chemcam = "camera=chemcam"
-    case mahli = "camera=mahli"
-    case mardi = "camera=mardi"
-    case navcam = "camera=navcam"
-    case pancam = "camera=pancam"
-    case minites = "camera=minites"
+    case fhaz = "fhaz"
+    case rhaz = "rhaz"
+    case mast = "mast"
+    case chemcam = "chemcam"
+    case mahli = "mahli"
+    case mardi = "mardi"
+    case navcam = "navcam"
+    case pancam = "ancam"
+    case minites = "minites"
 }
 enum querys : String {
     case photo = "photos"
 }
 class NasaServis : NasaProtocols  {
+    
+    
+    
+   
+   
+    
     
     
     
@@ -62,10 +72,23 @@ class NasaServis : NasaProtocols  {
 
         AF.request("\(api.baseUrl.rawValue)\(rover.curiosity)/photos?",method: .get, parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
             guard let photos =  data.value else {return}
-            print("parametrelerle çalıştı")
             complete(photos.photos!)
         }
        
+    }
+    func getCuriostyCam(camera: camera.RawValue, pagination: Bool, complete: @escaping ([Photo]) -> ()) {
+        if pagination == false {
+            sol = 1000
+        }
+        else {
+            sol = sol - 1
+        }
+        let params: [String: String] = ["sol": String(sol), "page": String(NasaServis.page), "api_key": api.apiKey.rawValue,  "camera" : camera ]
+
+        AF.request("\(api.baseUrl.rawValue)\(rover.curiosity)/photos?",method: .get, parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
+            guard let photos =  data.value else {return}
+            complete(photos.photos!)
+        }
     }
     func getOpportunity(pagination: Bool, complete: @escaping ([Photo]) -> ()) {
         if pagination == false {
@@ -76,13 +99,27 @@ class NasaServis : NasaProtocols  {
         }
         let params: [String: String] = ["sol": String(sol), "page": String(NasaServis.page), "api_key": api.apiKey.rawValue]
 
-        AF.request("\(api.baseUrl.rawValue)\(rover.opportunity)/photos?", parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
+        AF.request("\(api.baseUrl.rawValue)\(rover.opportunity)/photos?",method: .get, parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
             guard let photos =  data.value else {return}
-            print("parametrelerle çalıştı")
             complete(photos.photos!)
         }
         
     }
+    func getOpportunityCam(camera: camera.RawValue, pagination: Bool, complete: @escaping ([Photo]) -> ()) {
+        if pagination == false {
+            sol = 1000
+        }
+        else {
+            sol = sol - 1
+        }
+        let params: [String: String] = ["sol": String(sol), "page": String(NasaServis.page), "api_key": api.apiKey.rawValue,  "camera" : camera ]
+
+        AF.request("\(api.baseUrl.rawValue)\(rover.opportunity)/photos?",method: .get, parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
+            guard let photos =  data.value else {return}
+            complete(photos.photos!)
+        }
+    }
+    
     func getSpirit(pagination: Bool, complete: @escaping ([Photo]) -> ()) {
         if pagination == false {
             sol = 1000
@@ -98,6 +135,21 @@ class NasaServis : NasaProtocols  {
             complete(photos.photos!)
         }
     }
+    func getSpiritCam(camera: camera.RawValue, pagination: Bool, complete: @escaping ([Photo]) -> ()) {
+        if pagination == false {
+            sol = 1000
+        }
+        else {
+            sol = sol - 1
+        }
+        let params: [String: String] = ["sol": String(sol), "page": String(NasaServis.page), "api_key": api.apiKey.rawValue,  "camera" : camera ]
+
+        AF.request("\(api.baseUrl.rawValue)\(rover.spirit)/photos?",method: .get, parameters: params).validate().responseDecodable(of: MarsRovers.self) { (data) in
+            guard let photos =  data.value else {return}
+            complete(photos.photos!)
+        }
+    }
+    
     
     
     

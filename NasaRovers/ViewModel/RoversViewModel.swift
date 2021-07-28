@@ -25,11 +25,11 @@ class RoversViewModel {
         }
     }
 
-    func createCellViewModel( results: Photo ) -> RoverCellViewModel {
+    func createCellViewModel(results: Photo ) -> RoverCellViewModel {
       
         return RoverCellViewModel(imageURL: results.imgSrc!, launchDate: results.rover!.launchDate!, landingDate: results.rover!.landingDate!, photoDate: results.earthDate!, missionStatus: results.rover!.status!, roverName: results.rover!.name!, cameraName: results.camera!.fullName!, cameraShort: results.camera!.name!)
     }
-    func getCellViewModel( at indexPath: IndexPath ) -> RoverCellViewModel {
+    func getCellViewModel(at indexPath: IndexPath ) -> RoverCellViewModel {
         return roverCellViewModel[indexPath.row]
     }
     func fillModel (photos : [Photo] ){

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A97646CE26B0BEC600FA676E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A97646CD26B0BEC600FA676E /* SDWebImage */; };
 		A97646D226B0C80C00FA676E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A97646D126B0C80C00FA676E /* Kingfisher */; };
+		A99A388426B1C9B000CFFF9D /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99A388326B1C9B000CFFF9D /* DetailVC.swift */; };
 		A9CBECC126B047C200C4944D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBECC026B047C200C4944D /* AppDelegate.swift */; };
 		A9CBECC326B047C200C4944D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBECC226B047C200C4944D /* SceneDelegate.swift */; };
 		A9CBECC826B047C200C4944D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CBECC626B047C200C4944D /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A99A388326B1C9B000CFFF9D /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		A9CBECBD26B047C200C4944D /* NasaRovers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NasaRovers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CBECC026B047C200C4944D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9CBECC226B047C200C4944D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				A9CBECEF26B0824800C4944D /* SpiritVC.swift */,
 				A9CBECEC26B0823600C4944D /* OpportunityVC.swift */,
 				A9CBECE926B0815F00C4944D /* CuriosityVC.swift */,
+				A99A388326B1C9B000CFFF9D /* DetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				A9CBECC326B047C200C4944D /* SceneDelegate.swift in Sources */,
 				A9CBECED26B0823600C4944D /* OpportunityVC.swift in Sources */,
 				A9CBECD626B04AC100C4944D /* Model.swift in Sources */,
+				A99A388426B1C9B000CFFF9D /* DetailVC.swift in Sources */,
 				A9CBECF426B083DD00C4944D /* RoverCell.swift in Sources */,
 				A9CBECF026B0824800C4944D /* SpiritVC.swift in Sources */,
 				A9CBECEA26B0815F00C4944D /* CuriosityVC.swift in Sources */,
