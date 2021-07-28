@@ -7,11 +7,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class CuriosityVC: UIViewController {
+    
+    
+    var nasaTest = NasaServis()
+    var viewModel : [Photo]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        nasaTest.getCuriosity { (data) in
+            self.viewModel = data
+//            debugPrint(self.viewModel!)
+            debugPrint(self.viewModel?[2].imgSrc)
+        }
+        
+        print(RoverName.curiosity)
     }
 
 
