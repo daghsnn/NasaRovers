@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-
 protocol NasaProtocols {
     func getCuriosity(pagination: Bool, complete: @escaping ([Photo])->() )
     func getCuriostyCam(camera:camera.RawValue,pagination: Bool, complete: @escaping ([Photo])->() )
@@ -32,6 +31,7 @@ enum rover: String {
 
 }
 enum camera: String {
+    case All  
     case fhaz = "fhaz"
     case rhaz = "rhaz"
     case mast = "mast"
@@ -39,7 +39,7 @@ enum camera: String {
     case mahli = "mahli"
     case mardi = "mardi"
     case navcam = "navcam"
-    case pancam = "ancam"
+    case pancam = "pancam"
     case minites = "minites"
 }
 enum querys : String {
@@ -53,7 +53,7 @@ class NasaServis : NasaProtocols  {
    
     
     
-    
+   
     
     
     

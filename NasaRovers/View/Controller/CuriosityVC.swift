@@ -9,26 +9,17 @@ import UIKit
 import Kingfisher
 
 class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    static private var btnAccess = false
-
+    
+    
+    
+//
+    
     var service = NasaServis()
     var curiosityModel : [Photo] = [Photo]()
-//    @IBOutlet weak var allBtn: UIBarButtonItem!
-//    @IBOutlet weak var fhazBtn: UIBarButtonItem!
-//
-//    @IBOutlet weak var rhazBtn: UIBarButtonItem!
-//    @IBOutlet weak var mastBtn: UIBarButtonItem!
-//
-//    @IBOutlet weak var chemCamBtn: UIBarButtonItem!
-//
-//    @IBOutlet weak var mahliBtn: UIBarButtonItem!
-//    @IBOutlet weak var navcamBtn: UIBarButtonItem!
-//
-//    @IBOutlet weak var pancamBtn: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tabBarController?.title = "Select a Rover Camera"
 
         service.getCuriosity(pagination: false) { (data) in
             self.curiosityModel = data
@@ -36,12 +27,14 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
                 self.collectionView.reloadData()
             }
         }
-      
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationConfig()
         
+        
+//        navigationConfig()
+
         service.getCuriosity(pagination: false) { (data) in
             self.curiosityModel = data
             DispatchQueue.main.async {
@@ -49,11 +42,12 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
-    
+ 
     // MARK: UICollectionViewDataSource
 
+   
 
-  
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return curiosityModel.count
@@ -64,22 +58,23 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         let indexCell = curiosityModel[indexPath.row]
         let url = URL(string: indexCell.imgSrc!)
         let urlCached = ImageResource(downloadURL: url!, cacheKey: indexCell.imgSrc!)
+
         cell.curiosityImg.kf.setImage(with: urlCached)
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "curiostyToDetail", sender: curiosityModel[indexPath.row])
+        performSegue(withIdentifier: "opportunityToDetail", sender: curiosityModel[indexPath.row])
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "curiostyToDetail" {
+        if segue.identifier == "opportunityToDetail" {
             let vc = segue.destination as! DetailVC
             vc.model = sender as! Photo
         }
     }
-
     // MARK: Layout Flow delegate
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         
@@ -96,12 +91,9 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
 
            return CGSize(width: size, height: size)
     }
-  
-    // MARK: Scroll
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
             DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
                 self.service.getCuriosity(pagination: true) { (data) in
                     self.curiosityModel.append(contentsOf: data)
@@ -120,20 +112,12 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     // MARK: Navigation Functions
 
     @IBAction func allBtn(_ sender: Any) {
-        service.getCuriosity(pagination: false) { (data) in
+        service.getCuriosity(pagination: true) { (data) in
             self.curiosityModel = data
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-//            CuriosityVC.btnAccess = true
-//            if CuriosityVC.btnAccess == true{
-//                self.allBtn.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//            }
-//            else{
-//                self.allBtn.tintColor = #colorLiteral(red: 0, green: 0.8678845553, blue: 1, alpha: 1)
-//
-//
-//            }
+
         }
     }
     @IBAction func fhazBtn(_ sender: Any) {
@@ -200,8 +184,47 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
            
         }
     }
+    // MARK: Navigation Functions
+
     
 }
-// MARK:Extension
-
+// MARK:Extension Picker View
+//func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//
+//
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return pagination.count
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return pagination[row]
+//    }
+//
+//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//        pickerView.isHidden = false
+//        return false
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        cameraText.inputView = pickerView
+//
+//        cameraText.text = pagination[row]
+//        self.dismiss(animated: true) {
+//            if let selectedCam = self.cameraText.text {
+//                self.cameraType = camera(rawValue: selectedCam)!
+//                print(self.cameraType)
+//
+//            }
+//        }
+//        pickerView.isHidden = true
+//        self.service.getCuriostyCam(camera: cameraType.rawValue, pagination: true) { (data) in
+//            self.curiosityModel = data
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
+//            }
+//        }
+//        cameraText.resignFirstResponder()
+//    }
 

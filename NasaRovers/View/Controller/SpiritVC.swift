@@ -35,6 +35,7 @@ class SpiritVC: UICollectionViewController,  UICollectionViewDelegateFlowLayout,
                 self.collectionView.reloadData()
             }
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +102,112 @@ class SpiritVC: UICollectionViewController,  UICollectionViewDelegateFlowLayout,
            return CGSize(width: size, height: size)
     }
     
-    //MARK:Pagination delegate deneme
+   
+   // MARK: Scroll
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
+            
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+                self.service.getSpirit(pagination: true) { (data) in
+                    self.spiritModel.append(contentsOf: data)
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                            
+                        }
+                    }
+            }
+                    
+
+        }
+
+    }
+    
+    // MARK: Navigation Functions
+    @IBAction func allBtn(_ sender: Any) {
+        service.getSpirit(pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            
+        }
+        self.whoClicked(camera: "All")
+    }
+    @IBAction func fhazBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.fhaz.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            
+            
+            }
+            
+        }
+//        self.whoClicked(camera: camera.fhaz.rawValue)
+    }
+    @IBAction func rhazBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.rhaz.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+       
+    }
+    @IBAction func mastBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.mast.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+    }
+    @IBAction func chemcamBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.chemcam.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+
+    }
+    @IBAction func mahliBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.mahli.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+       
+
+    }
+    @IBAction func navcamBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.navcam.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+       
+    }
+    @IBAction func pancamBtn(_ sender: Any) {
+        service.getSpiritCam(camera: camera.pancam.rawValue, pagination: true) { (data) in
+            self.spiritModel = data
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+           
+        }
+        
+
+    }
+}
+//MARK:Pagination delegate deneme
 //    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let position = scrollView.contentOffset.y
 //        if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
@@ -150,110 +256,3 @@ class SpiritVC: UICollectionViewController,  UICollectionViewDelegateFlowLayout,
 //        }
 //
 //    }
-   // MARK: Scroll
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let position = scrollView.contentOffset.y
-        if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-                self.service.getSpirit(pagination: true) { (data) in
-                    self.spiritModel.append(contentsOf: data)
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                            
-                        }
-                    }
-            }
-                    
-
-        }
-
-    }
-    
-    // MARK: Navigation Functions
-    @IBAction func allBtn(_ sender: Any) {
-        service.getSpirit(pagination: false) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-            
-        }
-        self.whoClicked(camera: "All")
-    }
-    @IBAction func fhazBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.fhaz.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            
-            
-            }
-            
-        }
-        self.whoClicked(camera: camera.fhaz.rawValue)
-    }
-    @IBAction func rhazBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.rhaz.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-        self.whoClicked(camera: camera.rhaz.rawValue)
-    }
-    @IBAction func mastBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.mast.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-           
-        }
-        self.whoClicked(camera: camera.mast.rawValue)
-    }
-    @IBAction func chemcamBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.chemcam.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-           
-        }
-        self.whoClicked(camera: camera.chemcam.rawValue)
-
-    }
-    @IBAction func mahliBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.mahli.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-           
-        }
-        self.whoClicked(camera: camera.mahli.rawValue)
-
-    }
-    @IBAction func navcamBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.navcam.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-           
-        }
-        self.whoClicked(camera: camera.navcam.rawValue)
-
-    }
-    @IBAction func pancamBtn(_ sender: Any) {
-        service.getSpiritCam(camera: camera.pancam.rawValue, pagination: true) { (data) in
-            self.spiritModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-           
-        }
-        self.whoClicked(camera: camera.pancam.rawValue)
-
-    }
-}

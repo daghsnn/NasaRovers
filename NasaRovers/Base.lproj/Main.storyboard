@@ -52,65 +52,60 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Curiosity" id="S8l-8m-T0N"/>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="ID0-fm-i6K">
+                        <nil key="title"/>
                         <rightBarButtonItems>
-                            <barButtonItem title="pancam" id="w1V-xv-TP5">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="mast" id="uT2-Cj-uLP">
                                 <connections>
-                                    <action selector="pancamBtn:" destination="Gfn-ob-dL0" id="eeN-1S-r9H"/>
+                                    <action selector="mastBtn:" destination="Gfn-ob-dL0" id="nnO-Kp-Z1d"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="navcam" id="GsQ-Xn-LmI">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="fhaz" id="Ptg-eF-V0S">
                                 <connections>
-                                    <action selector="navcamBtn:" destination="Gfn-ob-dL0" id="VKc-av-Mpf"/>
+                                    <action selector="fhazBtn:" destination="Gfn-ob-dL0" id="5Xq-qy-wfy"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="mahli" id="9Jt-VI-LVF">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="navcam" id="PWn-OK-vh0">
                                 <connections>
-                                    <action selector="mahliBtn:" destination="Gfn-ob-dL0" id="3xc-QH-YGx"/>
+                                    <action selector="navcamBtn:" destination="Gfn-ob-dL0" id="qNG-HC-dof"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="chemcam" id="Z8Y-5N-b8J">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="pancam" id="h7h-cO-ZCh">
                                 <connections>
-                                    <action selector="chemcamBtn:" destination="Gfn-ob-dL0" id="xhQ-Fe-dWL"/>
+                                    <action selector="pancamBtn:" destination="Gfn-ob-dL0" id="lms-sW-isQ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="mast" id="5I9-Dq-jXb">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="rhaz" id="vjL-Mw-dHb">
                                 <connections>
-                                    <action selector="mastBtn:" destination="Gfn-ob-dL0" id="VrG-Ee-g2w"/>
+                                    <action selector="rhazBtn:" destination="Gfn-ob-dL0" id="Vl3-Ac-Sut"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="rhaz" id="6oY-ri-0TQ">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="mahli" id="kPk-E4-a16">
                                 <connections>
-                                    <action selector="rhazBtn:" destination="Gfn-ob-dL0" id="DGG-TC-KdR"/>
+                                    <action selector="mahliBtn:" destination="Gfn-ob-dL0" id="nui-xq-Pkj"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="fhaz" id="c6z-Jn-L9q">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="chemcam" id="OTE-J2-IFn">
                                 <connections>
-                                    <action selector="fhazBtn:" destination="Gfn-ob-dL0" id="wt2-Ci-NF8"/>
+                                    <action selector="chemcamBtn:" destination="Gfn-ob-dL0" id="cn4-Px-x87"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="All" id="xiT-7W-J3e">
-                                <color key="tintColor" red="0.0" green="0.86788455529999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="All" id="YTK-7c-aSB">
                                 <connections>
-                                    <action selector="allBtn:" destination="Gfn-ob-dL0" id="Drk-fl-8jk"/>
+                                    <action selector="allBtn:" destination="Gfn-ob-dL0" id="aE8-dJ-pR8"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="hlr-ls-2AY" kind="show" identifier="curiostyToDetail" id="h1q-r2-n2q"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnY-vV-K8S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2177" y="19"/>
+            <point key="canvasLocation" x="2176.8115942028985" y="18.75"/>
         </scene>
         <!--DetailVC-->
         <scene sceneID="iys-fe-a6F">
@@ -128,40 +123,40 @@
                                 <rect key="frame" x="20" y="108" width="374" height="358.5"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s84-9h-70n">
-                                <rect key="frame" x="20" y="506.5" width="374" height="306.5"/>
+                                <rect key="frame" x="20" y="506.5" width="374" height="257.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1y-BJ-HWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rover Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8S-uG-Isp">
-                                        <rect key="frame" x="0.0" y="52.5" width="374" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="44" width="374" height="36.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2H9-U7-tvH">
-                                        <rect key="frame" x="0.0" y="105" width="374" height="44"/>
+                                        <rect key="frame" x="0.0" y="88.5" width="374" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rover Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efE-iE-nax">
-                                        <rect key="frame" x="0.0" y="157" width="374" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="132.5" width="374" height="36.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Launch Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUg-BW-dFy">
-                                        <rect key="frame" x="0.0" y="209.5" width="374" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="177" width="374" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Landing Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckx-QW-mOX">
-                                        <rect key="frame" x="0.0" y="262" width="374" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="221" width="374" height="36.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -494,6 +489,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KGR-JO-rtV"/>
+        <segue reference="h1q-r2-n2q"/>
     </inferredMetricsTieBreakers>
 </document>

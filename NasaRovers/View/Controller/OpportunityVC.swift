@@ -16,12 +16,7 @@ class OpportunityVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        service.getOpportunity(pagination: false) { (data) in
-            self.opportunityModel = data
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
+        
         
     }
     override func viewWillAppear(_ animated: Bool) {
