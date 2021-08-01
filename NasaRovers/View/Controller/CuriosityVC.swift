@@ -16,6 +16,7 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     var service = NasaServis()
     var curiosityModel : [Photo] = [Photo]()
+    var beginPaginate = false
     
     
     override func viewDidLoad() {
@@ -94,21 +95,29 @@ class CuriosityVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-                self.service.getCuriosity(pagination: true) { (data) in
-                    self.curiosityModel.append(contentsOf: data)
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                            
+            if !beginPaginate {
+                beginPagination()
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1.0, execute: {
+                    self.service.getCuriosity(pagination: true) { (data) in
+                        self.curiosityModel.append(contentsOf: data)
+                        self.beginPaginate = false
+                        self.collectionView.reloadData()
                         }
-                    }
-            }
+                })
+                    
+                        
+                }
+            
+
                     
 
         }
 
     }
-    
+    func beginPagination() {
+        beginPaginate = true
+    }
+
     // MARK: Navigation Functions
 
     @IBAction func allBtn(_ sender: Any) {

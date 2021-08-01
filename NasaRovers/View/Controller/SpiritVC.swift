@@ -25,7 +25,8 @@ class SpiritVC: UICollectionViewController,  UICollectionViewDelegateFlowLayout,
     var service = NasaServis()
     var spiritModel : [Photo] = [Photo]()
     var pagdelegate : PaginationProtocol!
-    
+    var beginPaginate = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -107,20 +108,27 @@ class SpiritVC: UICollectionViewController,  UICollectionViewDelegateFlowLayout,
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (collectionView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-                self.service.getSpirit(pagination: true) { (data) in
-                    self.spiritModel.append(contentsOf: data)
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                            
+            if !beginPaginate {
+                beginPagination()
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1.0, execute: {
+                    self.service.getCuriosity(pagination: true) { (data) in
+                        self.spiritModel.append(contentsOf: data)
+                        self.beginPaginate = false
+                        self.collectionView.reloadData()
                         }
-                    }
-            }
+                })
+                    
+                        
+                }
+            
+
                     
 
         }
 
+    }
+    func beginPagination() {
+        beginPaginate = true
     }
     
     // MARK: Navigation Functions
